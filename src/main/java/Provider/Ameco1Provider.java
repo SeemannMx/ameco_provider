@@ -3,28 +3,47 @@ package Provider;
 import Model.Ameco1Model;
 import com.google.gson.Gson;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class Ameco1Provider {
 
     private final String TAG = "PROVIDER AMECO_1 ";
-    private String path = "/Users/tkallinich/DashboardProjectResources/Rest";
+    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/";
 
     private Connection con;
 
-    String totalLaborforceQuery = "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total labour force (Labour force statistics)'";
+    String populationQuery =        "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
+    String totalLaborforceQuery =   "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total labour force (Labour force statistics)'";
+    String employmentQuery =        "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Employment, persons: total economy (National accounts)'";
+    String unEmploymentQuery =      "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total unemployment :- Member States: definition EUROSTAT'";
+
+    ArrayList <String> jsonCollection;
 
     public Ameco1Provider(Connection c) throws SQLException {
         con = c;
+        jsonCollection = new ArrayList<>();
 
     }
 
-    public void runQuery() throws SQLException {
+    public void runQuery() {
 
-        provideDataFromAmeco1(totalLaborforceQuery);
+        try{
+            provideDataFromAmeco1(populationQuery);
+            provideDataFromAmeco1(totalLaborforceQuery);
+            provideDataFromAmeco1(employmentQuery);
+            provideDataFromAmeco1(unEmploymentQuery);
+
+            // showCollection();
+            convertAndWriteCollectionToJson();
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -60,6 +79,41 @@ public class Ameco1Provider {
         System.out.println(json);
 
         st.close();
-        con.close();
+
+        jsonCollection.add(json);
+
     }
+
+    /**
+     * convert collection of json objects to one json object
+     */
+    private void convertAndWriteCollectionToJson() throws IOException {
+
+        String json = new Gson().toJson(jsonCollection);
+        System.out.println("JSON: " + json);
+
+        String nameOfFile = "ameco_1_data.txt";
+
+        FileWriter file = new FileWriter(path + nameOfFile);
+        file.write(json);
+
+        file.flush();
+        file.close();
+
+    }
+
+    /**
+     * show content of json - collection
+     */
+    private void showCollection(){
+
+        System.out.println(TAG);
+        for(int i = 0; i < jsonCollection.size(); i++){
+
+            System.out.println("\tCollection: " + jsonCollection.get(i));
+
+        }
+
+    }
+
 }

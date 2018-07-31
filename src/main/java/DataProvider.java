@@ -10,6 +10,8 @@ public class DataProvider {
 
     private Connection con;
 
+    String AMECO1 = "AMECO1";
+
 
     public DataProvider(Connection c) {
         this.con = c;
@@ -18,7 +20,8 @@ public class DataProvider {
 
     public void getDatafromTables() throws SQLException {
 
-        // getColumnNamesFromDatabase(tableName);
+        // getColumnNamesFromDatabase(AMECO1);
+
         Ameco1Provider ameco1Provider = new Ameco1Provider(con);
         ameco1Provider.runQuery();
 

@@ -13,7 +13,6 @@ public class ShellRunner {
     }
 
     public void run(String c) throws IOException {
-        String[]cmd;
 
         switch (c){
             case "open":
@@ -22,19 +21,23 @@ public class ShellRunner {
 
                 path = path + "openFile.sh";
 
-                cmd = new String[]{"/bin/bash", path};
+                String[]cmd = new String[]{"/bin/bash", path};
                 Runtime.getRuntime().exec(cmd);
+
+                System.out.println(TAG + "Path: " + path);
 
                 break;
 
-            case "git push":
+            case "git_push":
 
                 System.out.println(TAG + "run shell: gitPush.sh");
 
-                path = path + "openFile.sh";
+                path = path + "gitPush.sh";
 
-                cmd = new String[]{"/bin/bash", path};
-                Runtime.getRuntime().exec(cmd);
+                String[]cmdGit = new String[]{"/bin/bash", path};
+                Runtime.getRuntime().exec(cmdGit);
+
+                System.out.println(TAG + "Path: " + path);
 
                 break;
 

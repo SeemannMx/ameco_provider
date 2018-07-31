@@ -25,7 +25,7 @@ public class DataProvider {
             ameco1Provider.runQuery();
 
             ShellRunner shell = new ShellRunner();
-            shell.run("open");
+            shell.run("git_push");
 
         } catch (Exception e){
             e.printStackTrace();

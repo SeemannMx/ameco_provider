@@ -1,5 +1,8 @@
 package Model;
 
+/**
+ * Model of Ameco Table 1
+ */
 public class Ameco1Model {
 
     private final String TAG = "AMECO_1 ";
@@ -12,6 +15,7 @@ public class Ameco1Model {
 
     /**
      * create Table Model Ameco 1
+     *
      * @param c     - country
      * @param sc    - subchapter
      * @param t     - title

@@ -3,20 +3,26 @@ import org.apache.tools.ant.helper.DefaultExecutor;
 
 import java.io.IOException;
 
+/**
+ * run shells from directory
+ */
 public class ShellRunner {
 
     private final String TAG = "SHELL RUNNER ";
 
     private String path = "/Users/tkallinich/DashboardProjectResources/Rest/ShellScripte/";
 
-    public ShellRunner() {
-    }
-
+    /**
+     * run designeted scrpts
+     *
+     * @param c - command
+     * @throws IOException
+     */
     public void run(String c) throws IOException {
 
         switch (c){
             case "open":
-
+                // open file testwise
                 System.out.println(TAG + "run shell: openFile.sh");
 
                 path = path + "openFile.sh";
@@ -30,6 +36,7 @@ public class ShellRunner {
 
             case "git_push":
 
+                // simulate rest service via github
                 System.out.println(TAG + "run shell: gitPush.sh");
 
                 path = path + "gitPush.sh";
@@ -45,6 +52,5 @@ public class ShellRunner {
                 System.out.println(TAG + "no script to run found");
 
         }
-
     }
 }

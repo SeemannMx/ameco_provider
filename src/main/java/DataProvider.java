@@ -2,28 +2,37 @@ import Provider.Ameco1Provider;
 
 import java.sql.*;
 
+/**
+ * provide data from tables
+ */
 public class DataProvider {
 
     private final String TAG = "DATA PROVIDER ";
 
     private Connection con;
 
-    String AMECO1 = "AMECO1";
 
-
+    /**
+     * public constructor of data provider
+     */
     public DataProvider(Connection c) {
         this.con = c;
 
     }
 
+    /**
+     * run querys for each table, save data in directory as json and push via shell to
+     * github repo as simulated rest service
+     */
     public void getDatafromTables() {
 
-        // getColumnNamesFromDatabase(AMECO1);
+        // getColumnNamesFromDatabase("AMECO1");
 
         try{
             Ameco1Provider ameco1Provider = new Ameco1Provider(con);
             ameco1Provider.runQuery();
 
+            // run shell script to push in repo
             ShellRunner shell = new ShellRunner();
             shell.run("git_push");
 

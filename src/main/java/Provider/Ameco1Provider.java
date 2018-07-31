@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Ameco 1 Data Provider
+ */
 public class Ameco1Provider {
 
     private final String TAG = "PROVIDER AMECO_1 ";
@@ -24,12 +27,21 @@ public class Ameco1Provider {
 
     ArrayList <String> jsonCollection;
 
+    /**
+     * public constructor
+     *
+     * @param c - conection
+     * @throws SQLException
+     */
     public Ameco1Provider(Connection c) throws SQLException {
         con = c;
         jsonCollection = new ArrayList<>();
 
     }
 
+    /**
+     * run querys in Ameco_1
+     */
     public void runQuery() {
 
         try{
@@ -47,6 +59,12 @@ public class Ameco1Provider {
 
     }
 
+    /**
+     * AMECO 1 - get data from table
+     *
+     * @param query - predefinded query as class variable
+     * @throws SQLException
+     */
     private void provideDataFromAmeco1(String query) throws SQLException {
 
         System.out.println(TAG + "QUERY : [" + query + "]");

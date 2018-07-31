@@ -13,7 +13,5 @@ public class Ameco1 {
         unit = u;
         year2018 = y;
 
-        // System.out.println("Population of " + country +  " is " + year2018 + " x " + unit);
-
     }
 }

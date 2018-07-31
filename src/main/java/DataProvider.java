@@ -1,14 +1,7 @@
 import Model.Ameco1;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mysql.cj.xdevapi.JsonArray;
-import jdk.nashorn.internal.parser.JSONParser;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DataProvider {
 
@@ -24,10 +17,14 @@ public class DataProvider {
 
     public void getDatafromTableAmeco1() throws SQLException {
 
-        System.out.println(TAG + "   get data from table ameco1");
+        String tableName = "AMECO1";
+
+        System.out.println(TAG + "   get data from table " + tableName);
+
+        getColumnNamesFromDatabase(tableName);
 
         // create query
-        String query = "SELECT * FROM AMECO1";
+        String query = "SELECT * FROM " + tableName;
 
         // create statement
         Statement st = con.createStatement();
@@ -38,24 +35,43 @@ public class DataProvider {
         // create GSON object
         Gson gson = new Gson();
 
-        System.out.println("ResultSet: +\n ");
-
+        System.out.println(TAG + "ResultSet: +\n ");
         Ameco1 ameco1;
 
         // iterate through resultset
         while(rs.next()){
 
+/*
             String country = rs.getString("COUNTRY");
             String unit = rs.getString("UNIT");
             String year2018 = rs.getString("2018");
+
+            System.out.println("-> " + country +  " " + unit + " " + year2018);
 
             ameco1 = new Ameco1(country, unit, year2018);
 
             // convert gson object to json object
             String json = gson.toJson(ameco1);
             System.out.println(json);
-
+*/
         }
         st.close();
+    }
+
+    private void getColumnNamesFromDatabase(String tableName) throws SQLException {
+        System.out.println(TAG + "------------------------------");
+        System.out.println(TAG + "get column names");
+
+        DatabaseMetaData md = con.getMetaData();
+        ResultSet rs = md.getColumns(null, null, tableName, "%");
+
+        System.out.println(TAG + "Table-name : " + tableName);
+
+        while(rs.next()){
+            System.out.println(TAG + "Column-name : " + rs.getString(4));
+
+        }
+        System.out.println(TAG + "------------------------------");
+
     }
 }

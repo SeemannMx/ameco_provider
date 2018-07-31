@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Ameco1Provider {
 
     private final String TAG = "PROVIDER AMECO_1 ";
-    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/";
+    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_1/";
 
     private Connection con;
 
@@ -92,13 +92,22 @@ public class Ameco1Provider {
         String json = new Gson().toJson(jsonCollection);
         System.out.println("JSON: " + json);
 
-        String nameOfFile = "ameco_1_data.txt";
+        String nameOfFile = "ameco_1_data.json";
 
         FileWriter file = new FileWriter(path + nameOfFile);
         file.write(json);
 
+        String copyOfFile = "db.json";
+
+        FileWriter fileCopy = new FileWriter(path + copyOfFile);
+        file.write(json);
+
         file.flush();
         file.close();
+
+    }
+
+    private void startRunner(){
 
     }
 

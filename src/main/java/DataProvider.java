@@ -1,6 +1,4 @@
-import Model.Ameco1Model;
 import Provider.Ameco1Provider;
-import com.google.gson.Gson;
 
 import java.sql.*;
 
@@ -18,12 +16,20 @@ public class DataProvider {
 
     }
 
-    public void getDatafromTables() throws SQLException {
+    public void getDatafromTables() {
 
         // getColumnNamesFromDatabase(AMECO1);
 
-        Ameco1Provider ameco1Provider = new Ameco1Provider(con);
-        ameco1Provider.runQuery();
+        try{
+            Ameco1Provider ameco1Provider = new Ameco1Provider(con);
+            ameco1Provider.runQuery();
+
+            ShellRunner shell = new ShellRunner();
+            shell.run("open");
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 

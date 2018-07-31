@@ -1,9 +1,8 @@
-import Model.Ameco1;
+import Model.Ameco1Model;
+import Provider.Ameco1Provider;
 import com.google.gson.Gson;
-import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 public class DataProvider {
 
@@ -17,52 +16,12 @@ public class DataProvider {
 
     }
 
-    public void getDatafromTableAmeco1() throws SQLException {
-
-        String tableName = "AMECO1";
-
-        System.out.println(TAG + "   get data from table " + tableName);
+    public void getDatafromTables() throws SQLException {
 
         // getColumnNamesFromDatabase(tableName);
+        Ameco1Provider ameco1Provider = new Ameco1Provider(con);
+        ameco1Provider.runQuery();
 
-        // create query
-        String select = "SELECT * FROM " + tableName + " ";
-        String where = "COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
-
-        String query ="SELECT * FROM AMECO1 where  COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
-
-        System.out.println(TAG + "QUERY : [" + query + "]");
-
-        // create statement
-        Statement st = con.createStatement();
-
-        // execute query and java resultset
-        ResultSet rs = st.executeQuery(query);
-
-
-        // create GSON object
-        Gson gson = new Gson();
-
-        System.out.println(TAG + "ResultSet:");
-        Ameco1 ameco1;
-
-        // iterate through resultset
-        while(rs.next()){
-
-            String country = rs.getString("COUNTRY");
-            String unit = rs.getString("UNIT");
-            String year2018 = rs.getString("2018");
-            String title = rs.getString("TITLE");
-
-            // System.out.println("Title " + title);
-
-            ameco1 = new Ameco1(country, unit, year2018);
-            // convert gson object to json object
-            String json = gson.toJson(ameco1);
-            System.out.println(json);
-
-        }
-        st.close();
     }
 
     /**

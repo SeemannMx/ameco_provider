@@ -1,5 +1,3 @@
-import Model.Ameco1;
-
 import java.sql.*;
 
 public class DatabaseHelper {
@@ -72,7 +70,7 @@ public class DatabaseHelper {
         System.out.println(TAG + " run provider");
 
         DataProvider provider = new DataProvider(con);
-        provider.getDatafromTableAmeco1();
+        provider.getDatafromTables();
 
     }
 

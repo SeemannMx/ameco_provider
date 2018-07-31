@@ -1,7 +1,9 @@
 import Model.Ameco1;
 import com.google.gson.Gson;
+import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DataProvider {
 
@@ -21,10 +23,15 @@ public class DataProvider {
 
         System.out.println(TAG + "   get data from table " + tableName);
 
-        getColumnNamesFromDatabase(tableName);
+        // getColumnNamesFromDatabase(tableName);
 
         // create query
-        String query = "SELECT * FROM " + tableName;
+        String select = "SELECT * FROM " + tableName + " ";
+        String where = "COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
+
+        String query ="SELECT * FROM AMECO1 where  COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
+
+        System.out.println(TAG + "QUERY : [" + query + "]");
 
         // create statement
         Statement st = con.createStatement();
@@ -32,32 +39,38 @@ public class DataProvider {
         // execute query and java resultset
         ResultSet rs = st.executeQuery(query);
 
+
         // create GSON object
         Gson gson = new Gson();
 
-        System.out.println(TAG + "ResultSet: +\n ");
+        System.out.println(TAG + "ResultSet:");
         Ameco1 ameco1;
 
         // iterate through resultset
         while(rs.next()){
 
-/*
             String country = rs.getString("COUNTRY");
             String unit = rs.getString("UNIT");
             String year2018 = rs.getString("2018");
+            String title = rs.getString("TITLE");
 
-            System.out.println("-> " + country +  " " + unit + " " + year2018);
+            // System.out.println("Title " + title);
 
             ameco1 = new Ameco1(country, unit, year2018);
-
             // convert gson object to json object
             String json = gson.toJson(ameco1);
             System.out.println(json);
-*/
+
         }
         st.close();
     }
 
+    /**
+     * get all columns from table
+     *
+     * @param tableName
+     * @throws SQLException
+     */
     private void getColumnNamesFromDatabase(String tableName) throws SQLException {
         System.out.println(TAG + "------------------------------");
         System.out.println(TAG + "get column names");

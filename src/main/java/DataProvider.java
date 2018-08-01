@@ -36,11 +36,62 @@ public class DataProvider extends DataManager {
             JSONArray jsonArray = new JSONArray();
 
             JSONObject ameco01JsonObject = new JSONObject();
+            JSONObject ameco02JsonObject = new JSONObject();
+            JSONObject ameco03JsonObject = new JSONObject();
+            JSONObject ameco04JsonObject = new JSONObject();
+            JSONObject ameco05JsonObject = new JSONObject();
+            JSONObject ameco06JsonObject = new JSONObject();
+            JSONObject ameco07JsonObject = new JSONObject();
+            JSONObject ameco08JsonObject = new JSONObject();
+            JSONObject ameco09JsonObject = new JSONObject();
+            JSONObject ameco10JsonObject = new JSONObject();
+            JSONObject ameco11JsonObject = new JSONObject();
+            JSONObject ameco12JsonObject = new JSONObject();
+            JSONObject ameco13JsonObject = new JSONObject();
+            JSONObject ameco14JsonObject = new JSONObject();
+            JSONObject ameco15JsonObject = new JSONObject();
+            JSONObject ameco16JsonObject = new JSONObject();
+            JSONObject ameco17JsonObject = new JSONObject();
+            JSONObject ameco18JsonObject = new JSONObject();
 
+            // ameco 1
             Ameco1Provider ameco1Provider = new Ameco1Provider(con);
             ameco01JsonObject = ameco1Provider.runQuery();
             jsonArray.add(ameco01JsonObject);
 
+            // ameco 2
+
+            // ameco 3
+
+            // ameco 4
+
+            // ameco 5
+
+            // ameco 6
+
+            // ameco 7
+
+            // ameco 8
+
+            // ameco 9
+
+            // ameco 10
+
+            // ameco 11
+
+            // ameco 12
+
+            // ameco 13
+
+            // ameco 14
+
+            // ameco 15
+
+            // ameco 16
+
+            // ameco 17
+
+            // ameco 18
 
             // build complete JSON
             mainJSON.put("data", jsonArray);

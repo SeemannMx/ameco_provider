@@ -1,7 +1,11 @@
 package Provider;
 
 import Model.Ameco1Model;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.io.*;
 import java.sql.Connection;
@@ -13,12 +17,15 @@ import java.util.ArrayList;
 /**
  * Ameco 1 Data Provider
  */
-public class Ameco1Provider {
+public class Ameco1Provider extends DataManager {
 
     private final String TAG = "PROVIDER AMECO_1 ";
     private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_01/";
 
     private Connection con;
+    private JSONObject jsonObject;
+    private JSONArray jsonArray;
+
 
     String populationQuery =        "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
     String totalLaborforceQuery =   "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total labour force (Labour force statistics)'";
@@ -34,6 +41,7 @@ public class Ameco1Provider {
      * @throws SQLException
      */
     public Ameco1Provider(Connection c) throws SQLException {
+        super();
         con = c;
         jsonCollection = new ArrayList<>();
 
@@ -42,21 +50,29 @@ public class Ameco1Provider {
     /**
      * run querys in Ameco_1
      */
-    public void runQuery() {
+    public JSONObject runQuery() {
 
         try{
-            provideDataFromAmeco1(populationQuery);
-            provideDataFromAmeco1(totalLaborforceQuery);
-            provideDataFromAmeco1(employmentQuery);
-            provideDataFromAmeco1(unEmploymentQuery);
+            jsonObject = new JSONObject();
+            jsonArray = new JSONArray();
 
+            jsonArray.add(provideDataFromAmeco1("population", populationQuery));
+            jsonArray.add(provideDataFromAmeco1("totalLaborForce",totalLaborforceQuery));
+            jsonArray.add(provideDataFromAmeco1("employedPersons",employmentQuery));
+            jsonArray.add(provideDataFromAmeco1("unEmployedPersons",unEmploymentQuery));
+
+            jsonObject.put("Ameco01", jsonArray);
+
+            // writeToFile(jsonObject);
             // showCollection();
-            convertAndWriteCollectionToJson();
+
+            convertAndWriteCollectionToJson(path, jsonCollection);
 
         } catch (Exception e){
             e.printStackTrace();
         }
 
+        return jsonObject;
     }
 
     /**
@@ -65,7 +81,7 @@ public class Ameco1Provider {
      * @param query - predefinded query as class variable
      * @throws SQLException
      */
-    private void provideDataFromAmeco1(String query) throws SQLException {
+    private JSONObject provideDataFromAmeco1(String key, String query) throws SQLException {
 
         System.out.println(TAG + "QUERY : [" + query + "]");
 
@@ -78,7 +94,7 @@ public class Ameco1Provider {
         // create GSON object
         Gson gson = new Gson();
 
-        System.out.println(TAG + "ResultSet:");
+        // System.out.println(TAG + "ResultSet:");
         Ameco1Model ameco1;
 
         // iterate through resultset
@@ -94,49 +110,19 @@ public class Ameco1Provider {
         ameco1 = new Ameco1Model(country, subChapter, title, unit, year2018);
         // convert gson object to json object
         String json = gson.toJson(ameco1);
-        System.out.println(json);
+        // System.out.println(json);
+
+        // create proper json object
+        JSONObject jsonObj0 = new JSONObject();
+        jsonObj0.put(key, year2018);
 
         st.close();
 
         jsonCollection.add(json);
 
+        return jsonObj0;
     }
 
-    /**
-     * convert collection of json objects to one json object
-     */
-    private void convertAndWriteCollectionToJson() throws IOException {
 
-        String json = new Gson().toJson(jsonCollection);
-        System.out.println("JSON: " + json);
-
-        // String nameOfFile = "ameco_1_data.json";
-        String nameOfFile = "db.json";
-
-        FileWriter file = new FileWriter(path + nameOfFile);
-        file.write(json);
-
-        file.flush();
-        file.close();
-
-    }
-
-    private void startRunner(){
-
-    }
-
-    /**
-     * show content of json - collection
-     */
-    private void showCollection(){
-
-        System.out.println(TAG);
-        for(int i = 0; i < jsonCollection.size(); i++){
-
-            System.out.println("\tCollection: " + jsonCollection.get(i));
-
-        }
-
-    }
 
 }

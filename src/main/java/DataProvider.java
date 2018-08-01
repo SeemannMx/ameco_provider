@@ -1,11 +1,14 @@
 import Provider.Ameco1Provider;
+import Provider.DataManager;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.sql.*;
 
 /**
  * provide data from tables
  */
-public class DataProvider {
+public class DataProvider extends DataManager {
 
     private final String TAG = "DATA PROVIDER ";
 
@@ -16,6 +19,7 @@ public class DataProvider {
      * public constructor of data provider
      */
     public DataProvider(Connection c) {
+        super();
         this.con = c;
 
     }
@@ -25,12 +29,23 @@ public class DataProvider {
      * github repo as simulated rest service
      */
     public void getDatafromTables() {
-
         // getColumnNamesFromDatabase("AMECO1");
 
         try{
+            JSONObject mainJSON = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+
+            JSONObject ameco01JsonObject = new JSONObject();
+
             Ameco1Provider ameco1Provider = new Ameco1Provider(con);
-            ameco1Provider.runQuery();
+            ameco01JsonObject = ameco1Provider.runQuery();
+            jsonArray.add(ameco01JsonObject);
+
+
+            // build complete JSON
+            mainJSON.put("data", jsonArray);
+
+            writeToFile(mainJSON);
 
             // run shell script to push in repo
             ShellRunner shell = new ShellRunner();

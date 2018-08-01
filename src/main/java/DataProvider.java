@@ -104,20 +104,43 @@ public class DataProvider extends DataManager {
             jsonArray.add(ameco10JsonObject);
 
             // ameco 11
+            Ameco11Provider ameco11Provider = new Ameco11Provider(con);
+            ameco11JsonObject = ameco11Provider.runQuery();
+            jsonArray.add(ameco11JsonObject);
 
             // ameco 12
+            Ameco12Provider ameco12Provider = new Ameco12Provider(con);
+            ameco12JsonObject = ameco12Provider.runQuery();
+            jsonArray.add(ameco12JsonObject);
 
             // ameco 13
+            Ameco13Provider ameco13Provider = new Ameco13Provider(con);
+            ameco13JsonObject = ameco13Provider.runQuery();
+            jsonArray.add(ameco13JsonObject);
 
             // ameco 14
+            Ameco14Provider ameco14Provider = new Ameco14Provider(con);
+            ameco14JsonObject = ameco14Provider.runQuery();
+            jsonArray.add(ameco14JsonObject);
 
             // ameco 15
+            Ameco15Provider ameco15Provider = new Ameco15Provider(con);
+            ameco15JsonObject = ameco15Provider.runQuery();
+            jsonArray.add(ameco15JsonObject);
 
             // ameco 16
+            // no data
 
             // ameco 17
+            Ameco17Provider ameco17Provider = new Ameco17Provider(con);
+            ameco17JsonObject = ameco17Provider.runQuery();
+            jsonArray.add(ameco17JsonObject);
 
             // ameco 18
+            Ameco18Provider ameco18Provider = new Ameco18Provider(con);
+            ameco18JsonObject = ameco18Provider.runQuery();
+            jsonArray.add(ameco18JsonObject);
+
 
             // build complete JSON
             mainJSON.put("data", jsonArray);

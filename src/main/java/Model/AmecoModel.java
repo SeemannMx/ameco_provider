@@ -3,7 +3,7 @@ package Model;
 /**
  * Model of Ameco Table 1
  */
-public class Ameco1Model {
+public class AmecoModel {
 
     private final String TAG = "AMECO_1 ";
 
@@ -22,7 +22,7 @@ public class Ameco1Model {
      * @param u     - unit
      * @param y     - year 2018
      */
-    public Ameco1Model(String c, String sc, String t, String u, String y) {
+    public AmecoModel(String c, String sc, String t, String u, String y) {
         country = c;
         subChapter = sc;
         title = t;

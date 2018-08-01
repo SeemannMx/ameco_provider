@@ -14,20 +14,17 @@ import java.util.ArrayList;
 /**
  * Ameco 1 Data Provider
  */
-public class Ameco1Provider extends DataManager {
+public class Ameco2Provider extends DataManager {
 
-    private final String TAG = "PROVIDER AMECO_1 ";
-    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_01/";
+    private final String TAG = "PROVIDER AMECO_2 ";
+    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_02/";
 
     private Connection con;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
 
 
-    String populationQuery =        "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total population (National accounts)'";
-    String totalLaborforceQuery =   "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total labour force (Labour force statistics)'";
-    String employmentQuery =        "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Employment, persons: total economy (National accounts)'";
-    String unEmploymentQuery =      "SELECT * FROM AMECO1 WHERE COUNTRY = 'Germany' AND TITLE = 'Total unemployment :- Member States: definition EUROSTAT'";
+    String consumptionQuery =        "SELECT * FROM AMECO2 WHERE COUNTRY = 'Germany' AND TITLE = 'Total consumption at current prices'";
 
     ArrayList <String> jsonCollection;
 
@@ -37,7 +34,7 @@ public class Ameco1Provider extends DataManager {
      * @param c - conection
      * @throws SQLException
      */
-    public Ameco1Provider(Connection c) throws SQLException {
+    public Ameco2Provider(Connection c) throws SQLException {
         super();
         con = c;
         jsonCollection = new ArrayList<>();
@@ -45,7 +42,7 @@ public class Ameco1Provider extends DataManager {
     }
 
     /**
-     * run querys in Ameco_1
+     * run querys in Ameco_2
      */
     public JSONObject runQuery() {
 
@@ -53,15 +50,12 @@ public class Ameco1Provider extends DataManager {
             jsonObject = new JSONObject();
             jsonArray = new JSONArray();
 
-            jsonArray.add(provideDataFromAmeco1("population", populationQuery));
-            jsonArray.add(provideDataFromAmeco1("totalLaborForce",totalLaborforceQuery));
-            jsonArray.add(provideDataFromAmeco1("employedPersons",employmentQuery));
-            jsonArray.add(provideDataFromAmeco1("unEmployedPersons",unEmploymentQuery));
+            jsonArray.add(provideDataFromAmeco2("consumption", consumptionQuery));
 
-            jsonObject.put("Ameco01", jsonArray);
+            jsonObject.put("Ameco02", jsonArray);
 
             // writeToFile(jsonObject);
-            // showCollection();
+            showCollection(jsonCollection);
 
             convertAndWriteCollectionToJson(path, jsonCollection);
 
@@ -78,7 +72,7 @@ public class Ameco1Provider extends DataManager {
      * @param query - predefinded query as class variable
      * @throws SQLException
      */
-    private JSONObject provideDataFromAmeco1(String key, String query) throws SQLException {
+    private JSONObject provideDataFromAmeco2(String key, String query) throws SQLException {
 
         System.out.println(TAG + "QUERY : [" + query + "]");
 
@@ -92,7 +86,7 @@ public class Ameco1Provider extends DataManager {
         Gson gson = new Gson();
 
         // System.out.println(TAG + "ResultSet:");
-        AmecoModel ameco1;
+        AmecoModel ameco2;
 
         // iterate through resultset
 
@@ -104,9 +98,9 @@ public class Ameco1Provider extends DataManager {
         String unit = rs.getString("UNIT");
         String year2018 = rs.getString("2018");
 
-        ameco1 = new AmecoModel(country, subChapter, title, unit, year2018);
+        ameco2 = new AmecoModel(country, subChapter, title, unit, year2018);
         // convert gson object to json object
-        String json = gson.toJson(ameco1);
+        String json = gson.toJson(ameco2);
         // System.out.println(json);
 
         // create proper json object
@@ -119,4 +113,7 @@ public class Ameco1Provider extends DataManager {
 
         return jsonObj0;
     }
+
+
+
 }

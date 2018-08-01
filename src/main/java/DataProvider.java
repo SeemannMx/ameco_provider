@@ -1,4 +1,5 @@
 import Provider.Ameco1Provider;
+import Provider.Ameco2Provider;
 import Provider.DataManager;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -60,6 +61,9 @@ public class DataProvider extends DataManager {
             jsonArray.add(ameco01JsonObject);
 
             // ameco 2
+            Ameco2Provider ameco2Provider = new Ameco2Provider(con);
+            ameco02JsonObject = ameco2Provider.runQuery();
+            jsonArray.add(ameco02JsonObject);
 
             // ameco 3
 

@@ -1,10 +1,15 @@
 package Provider;
 
+import Model.AmecoModel;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DataManager {
@@ -61,4 +66,5 @@ public class DataManager {
         file.close();
 
     }
+
 }

@@ -12,19 +12,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Ameco 2 Data Provider
+ * Ameco 3 Data Provider
  */
-public class Ameco2Provider extends DataManager {
+public class Ameco3Provider extends DataManager {
 
-    private final String TAG = "PROVIDER AMECO_2 ";
-    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_02/";
+    private final String TAG = "PROVIDER AMECO_3 ";
+    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_03/";
 
     private Connection con;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
 
 
-    String consumptionQuery =        "SELECT * FROM AMECO2 WHERE COUNTRY = 'Germany' AND TITLE = 'Total consumption at current prices'";
+    String savingsQuery =        "SELECT * FROM AMECO3 WHERE COUNTRY = 'Germany' AND TITLE = 'Gross saving: private sector :- ESA 2010'";
 
     ArrayList <String> jsonCollection;
 
@@ -34,7 +34,7 @@ public class Ameco2Provider extends DataManager {
      * @param c - conection
      * @throws SQLException
      */
-    public Ameco2Provider(Connection c) throws SQLException {
+    public Ameco3Provider(Connection c) throws SQLException {
         super();
         con = c;
         jsonCollection = new ArrayList<>();
@@ -42,7 +42,7 @@ public class Ameco2Provider extends DataManager {
     }
 
     /**
-     * run querys in Ameco_2
+     * run querys in Ameco_3
      */
     public JSONObject runQuery() {
 
@@ -50,9 +50,9 @@ public class Ameco2Provider extends DataManager {
             jsonObject = new JSONObject();
             jsonArray = new JSONArray();
 
-            jsonArray.add(provideDataFromAmeco2("consumption", consumptionQuery));
+            jsonArray.add(provideDataFromAmeco3("savings", savingsQuery));
 
-            jsonObject.put("Ameco02", jsonArray);
+            jsonObject.put("Ameco03", jsonArray);
 
             // writeToFile(jsonObject);
             showCollection(jsonCollection);
@@ -72,7 +72,7 @@ public class Ameco2Provider extends DataManager {
      * @param query - predefinded query as class variable
      * @throws SQLException
      */
-    private JSONObject provideDataFromAmeco2(String key, String query) throws SQLException {
+    private JSONObject provideDataFromAmeco3(String key, String query) throws SQLException {
 
         System.out.println(TAG + "QUERY : [" + query + "]");
 

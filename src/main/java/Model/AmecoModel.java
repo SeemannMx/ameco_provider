@@ -5,7 +5,7 @@ package Model;
  */
 public class AmecoModel {
 
-    private final String TAG = "AMECO_1 ";
+    private final String TAG = "AMECO_MODEL ";
 
     String country;
     String subChapter;

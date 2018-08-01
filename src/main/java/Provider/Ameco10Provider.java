@@ -12,19 +12,22 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 /**
- * Ameco 2 Data Provider
+ * Ameco 10 Data Provider
  */
-public class Ameco2Provider extends DataManager {
+public class Ameco10Provider extends DataManager {
 
-    private final String TAG = "PROVIDER AMECO_2 ";
-    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_02/";
+    private final String TAG = "PROVIDER AMECO_10 ";
+    private String path = "/Users/tkallinich/DashboardProjectResources/Rest/rest_service_data/ameco_10/";
 
     private Connection con;
     private JSONObject jsonObject;
     private JSONArray jsonArray;
 
 
-    String consumptionQuery =        "SELECT * FROM AMECO2 WHERE COUNTRY = 'Germany' AND TITLE = 'Total consumption at current prices'";
+    String balanceQuery = "SELECT * FROM AMECO10 WHERE COUNTRY = 'Germany' AND TITLE = 'Balance on current transactions with the rest of the world (National accounts)'";
+    String lendingQuery = "SELECT * FROM AMECO10 WHERE COUNTRY = 'Germany' AND TITLE = 'Net lending (+) or net borrowing (-): total economy'";
+    String exportCurrentQuery = "SELECT * FROM AMECO10 WHERE COUNTRY = 'Germany' AND TITLE = 'Exports of goods at current prices (National accounts)'";
+    String importCurrentQuery = "SELECT * FROM AMECO10 WHERE COUNTRY = 'Germany' AND TITLE = 'Imports of goods at current prices (National accounts)'";
 
     ArrayList <String> jsonCollection;
 
@@ -34,7 +37,7 @@ public class Ameco2Provider extends DataManager {
      * @param c - conection
      * @throws SQLException
      */
-    public Ameco2Provider(Connection c) throws SQLException {
+    public Ameco10Provider(Connection c) throws SQLException {
         super();
         con = c;
         jsonCollection = new ArrayList<>();
@@ -42,7 +45,7 @@ public class Ameco2Provider extends DataManager {
     }
 
     /**
-     * run querys in Ameco_2
+     * run querys in Ameco_10
      */
     public JSONObject runQuery() {
 
@@ -50,9 +53,11 @@ public class Ameco2Provider extends DataManager {
             jsonObject = new JSONObject();
             jsonArray = new JSONArray();
 
-            jsonArray.add(provideDataFromAmeco2("consumption", consumptionQuery));
+            jsonArray.add(provideDataFromAmeco10("balance", balanceQuery));
+            jsonArray.add(provideDataFromAmeco10("netLending", lendingQuery));
 
-            jsonObject.put("Ameco02", jsonArray);
+
+            jsonObject.put("Ameco10", jsonArray);
 
             // writeToFile(jsonObject);
             showCollection(jsonCollection);
@@ -72,7 +77,7 @@ public class Ameco2Provider extends DataManager {
      * @param query - predefinded query as class variable
      * @throws SQLException
      */
-    private JSONObject provideDataFromAmeco2(String key, String query) throws SQLException {
+    private JSONObject provideDataFromAmeco10(String key, String query) throws SQLException {
 
         System.out.println(TAG + "QUERY : [" + query + "]");
 
@@ -113,7 +118,4 @@ public class Ameco2Provider extends DataManager {
 
         return jsonObj0;
     }
-
-
-
 }

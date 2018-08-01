@@ -1,6 +1,4 @@
-import Provider.Ameco1Provider;
-import Provider.Ameco2Provider;
-import Provider.DataManager;
+import Provider.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -29,8 +27,8 @@ public class DataProvider extends DataManager {
      * run querys for each table, save data in directory as json and push via shell to
      * github repo as simulated rest service
      */
-    public void getDatafromTables() {
-        // getColumnNamesFromDatabase("AMECO1");
+    public void getDatafromTables() throws SQLException {
+        // getColumnNamesFromDatabase("AMECO8");
 
         try{
             JSONObject mainJSON = new JSONObject();
@@ -66,20 +64,44 @@ public class DataProvider extends DataManager {
             jsonArray.add(ameco02JsonObject);
 
             // ameco 3
+            Ameco3Provider ameco3Provider = new Ameco3Provider(con);
+            ameco03JsonObject = ameco3Provider.runQuery();
+            jsonArray.add(ameco03JsonObject);
 
             // ameco 4
+            Ameco4Provider ameco4Provider = new Ameco4Provider(con);
+            ameco04JsonObject = ameco4Provider.runQuery();
+            jsonArray.add(ameco04JsonObject);
 
             // ameco 5
+            Ameco5Provider ameco5Provider = new Ameco5Provider(con);
+            ameco05JsonObject = ameco5Provider.runQuery();
+            jsonArray.add(ameco05JsonObject);
 
             // ameco 6
+            Ameco6Provider ameco6Provider = new Ameco6Provider(con);
+            ameco06JsonObject = ameco6Provider.runQuery();
+            jsonArray.add(ameco06JsonObject);
 
             // ameco 7
+            Ameco7Provider ameco7Provider = new Ameco7Provider(con);
+            ameco07JsonObject = ameco7Provider.runQuery();
+            jsonArray.add(ameco07JsonObject);
 
             // ameco 8
+            Ameco8Provider ameco8Provider = new Ameco8Provider(con);
+            // ameco08JsonObject = ameco8Provider.runQuery();
+            // jsonArray.add(ameco08JsonObject);
 
             // ameco 9
+            Ameco9Provider ameco9Provider = new Ameco9Provider(con);
+            ameco09JsonObject = ameco9Provider.runQuery();
+            jsonArray.add(ameco09JsonObject);
 
             // ameco 10
+            Ameco10Provider ameco10Provider = new Ameco10Provider(con);
+            ameco10JsonObject = ameco10Provider.runQuery();
+            jsonArray.add(ameco10JsonObject);
 
             // ameco 11
 

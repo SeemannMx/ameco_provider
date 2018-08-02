@@ -1,39 +1,39 @@
 package Provider;
 
-import Model.AmecoModel;
 import com.google.gson.Gson;
 import org.json.simple.JSONObject;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * Manager of json data (convert, show and write)
+ */
 public class DataManager {
 
     private final String TAG = "MANAGER ";
-
-    public DataManager() {
-
-    }
 
     /**
      * show content of json - collection
      */
     public void showCollection(ArrayList<String> jsonCollection){
-
+        /**
         System.out.println(TAG);
         for(int i = 0; i < jsonCollection.size(); i++){
 
             System.out.println("\tCollection: " + jsonCollection.get(i));
 
         }
+         **/
 
     }
 
+    /**
+     * write json file to assets folder
+     *
+     * @param jsonObject
+     * @throws IOException
+     */
     public void writeToFile(JSONObject jsonObject) throws IOException {
         String jsonX = jsonObject.toJSONString();
         String fileName = "test.json";
@@ -56,7 +56,6 @@ public class DataManager {
         String json = new Gson().toJson(jsonCollection);
         // System.out.println("JSON: " + json);
 
-        // String nameOfFile = "ameco_1_data.json";
         String nameOfFile = "db.json";
 
         FileWriter file = new FileWriter(path + nameOfFile);

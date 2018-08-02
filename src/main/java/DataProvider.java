@@ -10,9 +10,7 @@ import java.sql.*;
 public class DataProvider extends DataManager {
 
     private final String TAG = "DATA PROVIDER ";
-
     private Connection con;
-
 
     /**
      * public constructor of data provider
@@ -52,7 +50,6 @@ public class DataProvider extends DataManager {
         } catch (Exception e){
             e.printStackTrace();
         }
-
     }
 
     /**
@@ -75,6 +72,5 @@ public class DataProvider extends DataManager {
 
         }
         System.out.println(TAG + "------------------------------");
-
     }
 }

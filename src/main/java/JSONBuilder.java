@@ -1,20 +1,25 @@
 import Provider.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
 import java.sql.Connection;
 
+/**
+ * Build Json
+ */
 public class JSONBuilder {
 
     private final String TAG = "JSON BUILDER ";
-
     Connection con;
 
+    // public constructor
     public JSONBuilder(Connection c) {
         this.con = c;
     }
 
-
+    /**
+     * create json array of json objects
+     * @return json array
+     */
     public JSONArray createJson(){
 
         // create Json object and array
